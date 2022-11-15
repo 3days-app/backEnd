@@ -1,6 +1,7 @@
 package com.hongsi.mapleton.entity;
 
 import lombok.Data;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.util.ArrayList;

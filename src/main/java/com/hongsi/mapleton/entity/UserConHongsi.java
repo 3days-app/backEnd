@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
+
 public class UserConHongsi {
 
     @Id @GeneratedValue
