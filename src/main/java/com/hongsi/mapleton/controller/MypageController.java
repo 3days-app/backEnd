@@ -26,7 +26,7 @@ public class MypageController {
 
     @GetMapping("/mypage/hong-si/owner")
     public ResultDto findOwnerHongsi(HttpServletRequest request,
-                                           @RequestParam Long userId) {
+                                           @RequestParam(value = "user_id") Long userId) {
 
         HttpSession session = request.getSession();
         UserDto sessionUser = (UserDto) session.getAttribute("loginUser");
@@ -38,7 +38,7 @@ public class MypageController {
             resultDto.setResultMessage("유효하지 않은 요청입니다");
         } else {
             resultDto.setResultCode("success");
-            resultDto.setResultMessage("조회 성공");
+            resultDto.setResultMessage("내가 만든 홍시 조회 성공");
         }
 
         List<HongsiDto> result = new ArrayList<>();
@@ -55,7 +55,22 @@ public class MypageController {
     }
 
     @GetMapping("/mypage/hong-si/participant")
-    public List<HongsiDto> findParticipateHongsi(@RequestParam(value="user_id") Long userId) {
+    public ResultDto findParticipateHongsi(HttpServletRequest request,
+                                                 @RequestParam(value="user_id") Long userId) {
+
+        HttpSession session = request.getSession();
+        UserDto sessionUser = (UserDto) session.getAttribute("loginUser");
+
+        ResultDto resultDto = new ResultDto();
+
+        if (sessionUser == null) {
+            resultDto.setResultCode("fail");
+            resultDto.setResultMessage("유효하지 않은 요청입니다");
+        } else {
+            resultDto.setResultCode("success");
+            resultDto.setResultMessage("내가 쫀 홍시 조회 성공");
+        }
+
         List<HongsiDto> result = new ArrayList<>();
         for (Hongsi hongsi : mypageService.findParticipateHongsi(userId)) {
             HongsiDto hongsiDto = new HongsiDto();
@@ -64,11 +79,27 @@ public class MypageController {
             hongsiDto.endDate = hongsi.getEndDate();
             result.add(hongsiDto);
         }
-        return result;
+        resultDto.setData(result);
+        return resultDto;
     }
 
     @GetMapping("/mypage/hong-si/completed")
-    public List<HongsiDto> findCompletedHongsi(@RequestParam(value="user_id") Long userId) {
+    public ResultDto findCompletedHongsi(HttpServletRequest request,
+                                               @RequestParam(value="user_id") Long userId) {
+
+        HttpSession session = request.getSession();
+        UserDto sessionUser = (UserDto) session.getAttribute("loginUser");
+
+        ResultDto resultDto = new ResultDto();
+
+        if (sessionUser == null) {
+            resultDto.setResultCode("fail");
+            resultDto.setResultMessage("유효하지 않은 요청입니다");
+        } else {
+            resultDto.setResultCode("success");
+            resultDto.setResultMessage("내가 완료한 홍시 조회 성공");
+        }
+
         List<HongsiDto> result = new ArrayList<>();
         for (Hongsi hongsi : mypageService.findCompleteHongsi(userId)) {
             HongsiDto hongsiDto = new HongsiDto();
@@ -77,6 +108,7 @@ public class MypageController {
             hongsiDto.endDate = hongsi.getEndDate();
             result.add(hongsiDto);
         }
-        return result;
+        resultDto.setData(result);
+        return resultDto;
     }
 }
