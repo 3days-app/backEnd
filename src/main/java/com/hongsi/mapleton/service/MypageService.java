@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -29,7 +30,7 @@ public class MypageService {
         List<Hongsi> result = new ArrayList<>();
         for (UserConHongsi userConHongsi : findUserConHongsi ) {
             Hongsi findHongsi = hongsiRepo.findById(userConHongsi.getHongsiId().getId()).get();
-            if (findHongsi.getWriter() == findUser.getNickname()) {
+            if (Objects.equals(findHongsi.getWriter(), findUser.getNickname())) {
                 result.add(findHongsi);
             }
         }
@@ -41,7 +42,7 @@ public class MypageService {
         List<UserConHongsi> findUserConHongsi = userConHongsiRepo.findByUserId(userId);
         List<Hongsi> result = new ArrayList<>();
         for (UserConHongsi userConHongsi : findUserConHongsi) {
-            if (userConHongsi.getUserId() == findUser) {
+            if (Objects.equals(userConHongsi.getUserId(), findUser)) {
                 result.add(userConHongsi.getHongsiId());
             }
         }
@@ -54,7 +55,7 @@ public class MypageService {
         List<Hongsi> result = new ArrayList<>();
         for (UserConHongsi userConHongsi : findUserConHongsi ) {
             Hongsi findHongsi = hongsiRepo.findById(userConHongsi.getHongsiId().getId()).get();
-            if (findHongsi.getStatus() == "complete") {
+            if (Objects.equals(findHongsi.getStatus(), "complete")) {
                 result.add(findHongsi);
             }
         }
