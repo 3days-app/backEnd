@@ -10,13 +10,9 @@ import javax.persistence.Id;
 
 @Data
 public class HongsiDto {
-
-    @Id
-    @GeneratedValue
-    @Column(name = "hongsi_id")
     private Long id;
 
-    public String title;
-    public String startDate;
-    public String endDate;
+    private String title;
+    private String startDate;
+    private String endDate;
 }

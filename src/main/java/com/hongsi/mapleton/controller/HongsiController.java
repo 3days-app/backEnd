@@ -1,15 +1,14 @@
 package com.hongsi.mapleton.controller;
 
-import com.hongsi.mapleton.dto.HongsiBoardDto;
-import com.hongsi.mapleton.dto.HongsiDetailDto;
-import com.hongsi.mapleton.dto.HongsiListDto;
-import com.hongsi.mapleton.dto.RequestDto;
+import com.hongsi.mapleton.dto.*;
 import com.hongsi.mapleton.service.HongsiService;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Request;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RequestMapping("/hong-si")
@@ -46,7 +45,24 @@ public class HongsiController {
      * 목표 작성하기
      */
     @PostMapping("")
-    public ResponseEntity postHongsi(@RequestBody RequestDto requestDto){
+    public ResponseEntity postHongsi(HttpServletRequest request,
+                                     @RequestBody RequestDto requestDto){
+
+        HttpSession session = request.getSession();
+        UserDto sessionUser = (UserDto) session.getAttribute("loginUser");
+
+        ResultDto resultDto = new ResultDto();
+
+        if (sessionUser == null) {
+//            resultDto.setResultCode("fail");
+//            resultDto.setResultMessage("유효하지 않은 요청입니다");
+        } else {
+            requestDto.setUser_id(sessionUser.getUser_id());
+            return hongsiService.writeHongsi(requestDto);
+//            resultDto.setResultCode("success");
+//            resultDto.setResultMessage("내가 만든 홍시 조회 성공");
+        }
+
         return hongsiService.writeHongsi(requestDto);
     }
 
