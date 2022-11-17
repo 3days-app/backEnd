@@ -12,7 +12,8 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 public class Hongsi {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Id @GeneratedValue
     @Column(name = "hongsi_id")
     private Long id;
 
@@ -25,7 +26,7 @@ public class Hongsi {
     private String status;
     private String writer;
 
-    @OneToMany(mappedBy = "hongsiId")
+    @OneToMany(mappedBy = "hongsi")
     private List<UserConHongsi> userList = new ArrayList<>();
 
     @OneToMany(mappedBy = "hongsi")

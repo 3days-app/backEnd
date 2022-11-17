@@ -26,10 +26,10 @@ public class MypageService {
 
     public List<Hongsi> findOwnerHongsi(Long userId) {
         User findUser = userRepo.findById(userId).get();
-        List<UserConHongsi> findUserConHongsi = userConHongsiRepo.findByUserId(userId);
+        List<UserConHongsi> findUserConHongsi = userConHongsiRepo.findByUser(findUser);
         List<Hongsi> result = new ArrayList<>();
         for (UserConHongsi userConHongsi : findUserConHongsi ) {
-            Hongsi findHongsi = hongsiRepo.findById(userConHongsi.getHongsiId().getId()).get();
+            Hongsi findHongsi = hongsiRepo.findById(userConHongsi.getHongsi().getId()).get();
             if (Objects.equals(findHongsi.getWriter(), findUser.getNickname())) {
                 result.add(findHongsi);
             }
@@ -39,11 +39,11 @@ public class MypageService {
 
     public List<Hongsi> findParticipateHongsi(Long userId) {
         User findUser = userRepo.findById(userId).get();
-        List<UserConHongsi> findUserConHongsi = userConHongsiRepo.findByUserId(userId);
+        List<UserConHongsi> findUserConHongsi = userConHongsiRepo.findByUser(findUser);
         List<Hongsi> result = new ArrayList<>();
         for (UserConHongsi userConHongsi : findUserConHongsi) {
-            if (Objects.equals(userConHongsi.getUserId(), findUser)) {
-                result.add(userConHongsi.getHongsiId());
+            if (Objects.equals(userConHongsi.getUser(), findUser)) {
+                result.add(userConHongsi.getHongsi());
             }
         }
         return result;
@@ -51,10 +51,10 @@ public class MypageService {
 
     public List<Hongsi> findCompleteHongsi(Long userId) {
         User findUser = userRepo.findById(userId).get();
-        List<UserConHongsi> findUserConHongsi = userConHongsiRepo.findByUserId(findUser.getId());
+        List<UserConHongsi> findUserConHongsi = userConHongsiRepo.findByUser(findUser);
         List<Hongsi> result = new ArrayList<>();
         for (UserConHongsi userConHongsi : findUserConHongsi ) {
-            Hongsi findHongsi = hongsiRepo.findById(userConHongsi.getHongsiId().getId()).get();
+            Hongsi findHongsi = hongsiRepo.findById(userConHongsi.getHongsi().getId()).get();
             if (Objects.equals(findHongsi.getStatus(), "complete")) {
                 result.add(findHongsi);
             }

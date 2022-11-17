@@ -88,6 +88,9 @@ public class HongsiService {
     public ResponseEntity writeHongsi(RequestDto requestDto){
         Hongsi hongsi = new Hongsi(requestDto);
         hongsiRepo.save(hongsi);
+        User user = userRepo.findById(requestDto.getUser_id()).get();
+        UserConHongsi userConHongsi = new UserConHongsi(user, hongsi);
+        userConHongsiRepo.save(userConHongsi);
         return new ResponseEntity("목표 작성 완료", HttpStatus.OK);
     }
 
