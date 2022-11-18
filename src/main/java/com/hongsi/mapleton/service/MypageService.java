@@ -1,7 +1,7 @@
 package com.hongsi.mapleton.service;
 
 import com.hongsi.mapleton.entity.Hongsi;
-import com.hongsi.mapleton.entity.User;
+import com.hongsi.mapleton.entity.Users;
 import com.hongsi.mapleton.entity.UserConHongsi;
 import com.hongsi.mapleton.repo.HongsiRepo;
 import com.hongsi.mapleton.repo.UserConHongsiRepo;
@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -25,12 +24,12 @@ public class MypageService {
     private final UserConHongsiRepo userConHongsiRepo;
 
     public List<Hongsi> findOwnerHongsi(Long userId) {
-        User findUser = userRepo.findById(userId).get();
-        List<UserConHongsi> findUserConHongsi = userConHongsiRepo.findByUser(findUser);
+        Users findUsers = userRepo.findById(userId).get();
+        List<UserConHongsi> findUserConHongsi = userConHongsiRepo.findByUsersId(userId);
         List<Hongsi> result = new ArrayList<>();
         for (UserConHongsi userConHongsi : findUserConHongsi ) {
             Hongsi findHongsi = hongsiRepo.findById(userConHongsi.getHongsi().getId()).get();
-            if (Objects.equals(findHongsi.getWriter(), findUser.getNickname())) {
+            if (Objects.equals(findHongsi.getWriter(), findUsers.getNickname())) {
                 result.add(findHongsi);
             }
         }
@@ -38,11 +37,11 @@ public class MypageService {
     }
 
     public List<Hongsi> findParticipateHongsi(Long userId) {
-        User findUser = userRepo.findById(userId).get();
-        List<UserConHongsi> findUserConHongsi = userConHongsiRepo.findByUser(findUser);
+        Users findUsers = userRepo.findById(userId).get();
+        List<UserConHongsi> findUserConHongsi = userConHongsiRepo.findByUsersId(userId);
         List<Hongsi> result = new ArrayList<>();
         for (UserConHongsi userConHongsi : findUserConHongsi) {
-            if (Objects.equals(userConHongsi.getUser(), findUser)) {
+            if (Objects.equals(userConHongsi.getUsersId(), findUsers)) {
                 result.add(userConHongsi.getHongsi());
             }
         }
@@ -50,8 +49,8 @@ public class MypageService {
     }
 
     public List<Hongsi> findCompleteHongsi(Long userId) {
-        User findUser = userRepo.findById(userId).get();
-        List<UserConHongsi> findUserConHongsi = userConHongsiRepo.findByUser(findUser);
+        Users findUsers = userRepo.findById(userId).get();
+        List<UserConHongsi> findUserConHongsi = userConHongsiRepo.findByUsersId(findUsers.getId());
         List<Hongsi> result = new ArrayList<>();
         for (UserConHongsi userConHongsi : findUserConHongsi ) {
             Hongsi findHongsi = hongsiRepo.findById(userConHongsi.getHongsi().getId()).get();

@@ -2,7 +2,7 @@ package com.hongsi.mapleton.controller;
 
 import com.hongsi.mapleton.dto.ResultDto;
 import com.hongsi.mapleton.dto.UserDto;
-import com.hongsi.mapleton.entity.User;
+import com.hongsi.mapleton.entity.Users;
 import com.hongsi.mapleton.repo.UserRepo;
 import com.hongsi.mapleton.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.transform.Result;
 import java.util.Optional;
 
 @Slf4j
@@ -29,9 +28,9 @@ public class UserController {
         ResultDto resultDto = new ResultDto();
 
         try {
-            User signupUser = (User) userService.createUser(userDto);
+            Users signupUsers = (Users) userService.createUser(userDto);
 
-            if (signupUser.getId() != null) {
+            if (signupUsers.getId() != null) {
                 resultDto.setResultCode("success");
                 resultDto.setResultMessage("사용자 생성 성공");
             } else {
@@ -50,7 +49,7 @@ public class UserController {
     @PostMapping("/user/login")
     public ResultDto login(HttpServletRequest request,
                       @RequestBody UserDto userDto) {
-        Optional<User> loginUser = userRepo.findByEmailAndPassword(userDto.getEmail(), userDto.getPassword());
+        Optional<Users> loginUser = userRepo.findByEmailAndPassword(userDto.getEmail(), userDto.getPassword());
         ResultDto resultDto = new ResultDto();
 
         if (loginUser.isPresent()) {

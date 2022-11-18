@@ -3,6 +3,7 @@ package com.hongsi.mapleton.entity;
 import com.hongsi.mapleton.dto.RequestDto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Data
 @Entity
+@Table(name = "hongsi")
 @NoArgsConstructor
 public class Hongsi {
 

@@ -7,26 +7,25 @@ import javax.persistence.*;
 
 @Data
 @Entity
+@Table(name = "user_con_hongsi")
 @NoArgsConstructor
 public class UserConHongsi {
 
     @Id @GeneratedValue
-    @Column(name = "userConHongsi_id")
+    @Column(name = "user_con_hongsi_id")
     private Long id;
-
     private Long dup = 0l;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    private Users usersId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hongsi_id")
+//    @JoinColumn(name = "hongsi_id")
     private Hongsi hongsi;
 
-    public UserConHongsi(User user, Hongsi hongsi) {
-        this.user = user;
-        user.getHongsiList().add(this);
+    public UserConHongsi(Users users, Hongsi hongsi) {
+        this.usersId = users;
+        users.getHongsiList().add(this);
         this.hongsi = hongsi;
         hongsi.getUserList().add(this);
     }

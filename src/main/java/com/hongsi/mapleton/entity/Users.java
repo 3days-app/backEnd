@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Table(name = "Users")
 @NoArgsConstructor
-public class User {
+public class Users {
 
     @Id @GeneratedValue
     @Column(name = "user_id")
@@ -21,12 +21,12 @@ public class User {
     private String password;
     private String nickname;
 
-    public User(String email, String password, String nickname) {
+    public Users(String email, String password, String nickname) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
     }
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "usersId")
     private List<UserConHongsi> hongsiList = new ArrayList<>();
 }

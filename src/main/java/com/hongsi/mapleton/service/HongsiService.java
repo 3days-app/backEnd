@@ -6,7 +6,7 @@ import com.hongsi.mapleton.dto.HongsiListDto;
 import com.hongsi.mapleton.dto.RequestDto;
 import com.hongsi.mapleton.entity.Board;
 import com.hongsi.mapleton.entity.Hongsi;
-import com.hongsi.mapleton.entity.User;
+import com.hongsi.mapleton.entity.Users;
 import com.hongsi.mapleton.entity.UserConHongsi;
 import com.hongsi.mapleton.repo.BoardRepo;
 import com.hongsi.mapleton.repo.HongsiRepo;
@@ -88,8 +88,8 @@ public class HongsiService {
     public ResponseEntity writeHongsi(RequestDto requestDto){
         Hongsi hongsi = new Hongsi(requestDto);
         hongsiRepo.save(hongsi);
-        User user = userRepo.findById(requestDto.getUser_id()).get();
-        UserConHongsi userConHongsi = new UserConHongsi(user, hongsi);
+        Users users = userRepo.findById(requestDto.getUser_id()).get();
+        UserConHongsi userConHongsi = new UserConHongsi(users, hongsi);
         userConHongsiRepo.save(userConHongsi);
         return new ResponseEntity("목표 작성 완료", HttpStatus.OK);
     }
@@ -98,11 +98,11 @@ public class HongsiService {
      * 목표 참여하기
      */
     public ResponseEntity participateHongsi(Long userId, Long hongsiId) {
-        User user = userRepo.findById(userId)
+        Users users = userRepo.findById(userId)
                 .orElseThrow(() -> new IllegalStateException("유저 없음"));
         Hongsi hongsi = hongsiRepo.findById(hongsiId)
                 .orElseThrow(() -> new IllegalStateException("목표 없음"));
-        UserConHongsi userConHongsiCheck = userConHongsiRepo.findByUserIdAndHongsiId(user, hongsi);
+        UserConHongsi userConHongsiCheck = userConHongsiRepo.findByUsersIdAndHongsiId(users, hongsi);
 
         if(hongsi.getCurrentParticipant() >= hongsi.getMaxParticipant()){
             return new ResponseEntity("참여 인원 가득 참", HttpStatus.FORBIDDEN);
@@ -112,7 +112,7 @@ public class HongsiService {
         }
 
 
-        UserConHongsi userConHongsi = new UserConHongsi(user, hongsi);
+        UserConHongsi userConHongsi = new UserConHongsi(users, hongsi);
         userConHongsiRepo.save(userConHongsi);
         hongsi.setCurrentParticipant(hongsi.getCurrentParticipant() + 1);
 
