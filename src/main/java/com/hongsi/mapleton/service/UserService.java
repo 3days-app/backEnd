@@ -44,9 +44,9 @@ public class UserService {
 
 
     @Transactional
-    public void removeUser(UserDto userDto) {
+    public void removeUser(Long userId) {
 
-        Users users = userRepo.findById(userDto.getUser_id()).orElse(null);
+        Users users = userRepo.findById(userId).orElse(null);
         if (users == null) {
             throw new IllegalStateException("사용자가 존재하지 않습니다.");
         }

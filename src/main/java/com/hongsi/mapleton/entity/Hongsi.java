@@ -28,10 +28,10 @@ public class Hongsi {
     private String status;
     private String writer;
 
-    @OneToMany(mappedBy = "hongsi")
+    @OneToMany(mappedBy = "hongsi", cascade = CascadeType.PERSIST)
     private List<UserConHongsi> userList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "hongsi")
+    @OneToMany(mappedBy = "hongsi", cascade = CascadeType.PERSIST)
     private List<Board> boardList = new ArrayList<>();
 
     public Hongsi (RequestDto requestDto){
