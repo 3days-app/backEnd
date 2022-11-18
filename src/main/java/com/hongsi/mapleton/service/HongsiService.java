@@ -102,7 +102,8 @@ public class HongsiService {
                 .orElseThrow(() -> new IllegalStateException("유저 없음"));
         Hongsi hongsi = hongsiRepo.findById(hongsiId)
                 .orElseThrow(() -> new IllegalStateException("목표 없음"));
-        UserConHongsi userConHongsiCheck = userConHongsiRepo.findByUsersIdAndHongsiId(users, hongsi);
+
+        UserConHongsi userConHongsiCheck = userConHongsiRepo.findByUsersIdAndHongsi(users, hongsi);
 
         if(hongsi.getCurrentParticipant() >= hongsi.getMaxParticipant()){
             return new ResponseEntity("참여 인원 가득 참", HttpStatus.FORBIDDEN);
@@ -110,7 +111,6 @@ public class HongsiService {
         if(userConHongsiCheck != null) {
             return new ResponseEntity("이미 참여함", HttpStatus.FORBIDDEN);
         }
-
 
         UserConHongsi userConHongsi = new UserConHongsi(users, hongsi);
         userConHongsiRepo.save(userConHongsi);
