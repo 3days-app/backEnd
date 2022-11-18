@@ -87,6 +87,7 @@ public class HongsiService {
      */
     public ResponseEntity writeHongsi(RequestDto requestDto){
         Hongsi hongsi = new Hongsi(requestDto);
+        hongsi.setSuccess_status("fail");
         hongsiRepo.save(hongsi);
         Users users = userRepo.findById(requestDto.getUser_id()).get();
         UserConHongsi userConHongsi = new UserConHongsi(users, hongsi);
