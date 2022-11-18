@@ -11,7 +11,6 @@ import javax.persistence.Id;
 @Data
 public class HongsiDto {
     private Long id;
-
     private String title;
     private String startDate;
     private String endDate;

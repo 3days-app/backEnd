@@ -85,8 +85,7 @@ public class UserController {
     }
 
     @DeleteMapping("/user")
-    public ResultDto removeUser(HttpServletRequest request,
-                           @RequestBody UserDto userDto) {
+    public ResultDto removeUser(HttpServletRequest request) {
         HttpSession session = request.getSession();
         UserDto sessionUser = (UserDto) session.getAttribute("loginUser");
 
@@ -96,7 +95,7 @@ public class UserController {
             resultDto.setResultCode("fail");
             resultDto.setResultMessage("유효하지 않은 요청입니다");
         } else {
-            userService.removeUser(userDto);
+            userService.removeUser(sessionUser.getUser_id());
             resultDto.setResultCode("success");
             resultDto.setResultMessage("사용자 삭제 성공");
         }
@@ -112,14 +111,16 @@ public class UserController {
 
         ResultDto resultDto = new ResultDto();
 
+        userDto.setUser_id(sessionUser.getUser_id());
+
         if (sessionUser == null) {
             resultDto.setResultCode("fail");
             resultDto.setResultMessage("유효하지 않은 요청입니다");
         } else {
             resultDto.setResultCode("success");
             resultDto.setResultMessage("닉네임 변경 성공");
+            userService.updateUser(userDto);
         }
-        userService.updateUser(userDto);
 
         resultDto.setData(userDto);
         return resultDto;

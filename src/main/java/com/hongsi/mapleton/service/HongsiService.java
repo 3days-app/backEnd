@@ -79,6 +79,8 @@ public class HongsiService {
      * 목표 게시판 작성하기 - S3 추가해야함
      */
     public ResponseEntity writeHongsiBoard(Long hongsiId, MultipartFile multipartFile){
+        Hongsi hongsi = hongsiRepo.findById(hongsiId).get();
+        hongsi.setSuccess_status("success");
         return new ResponseEntity("게시글 작성 완료", HttpStatus.OK);
     }
 
@@ -87,6 +89,7 @@ public class HongsiService {
      */
     public ResponseEntity writeHongsi(RequestDto requestDto){
         Hongsi hongsi = new Hongsi(requestDto);
+        hongsi.setSuccess_status("fail");
         hongsiRepo.save(hongsi);
         Users users = userRepo.findById(requestDto.getUser_id()).get();
         UserConHongsi userConHongsi = new UserConHongsi(users, hongsi);

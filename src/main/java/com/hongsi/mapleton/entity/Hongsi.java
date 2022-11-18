@@ -3,7 +3,6 @@ package com.hongsi.mapleton.entity;
 import com.hongsi.mapleton.dto.RequestDto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -25,13 +24,15 @@ public class Hongsi {
     private String content;
     private String startDate;
     private String endDate;
-    private String status;
+    private String hongsi_status; //before during completed
+    private String success_status; //success fail
+
     private String writer;
 
-    @OneToMany(mappedBy = "hongsi")
+    @OneToMany(mappedBy = "hongsi", cascade = CascadeType.PERSIST)
     private List<UserConHongsi> userList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "hongsi")
+    @OneToMany(mappedBy = "hongsi", cascade = CascadeType.PERSIST)
     private List<Board> boardList = new ArrayList<>();
 
     public Hongsi (RequestDto requestDto){

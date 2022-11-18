@@ -27,6 +27,6 @@ public class Users {
         this.nickname = nickname;
     }
 
-    @OneToMany(mappedBy = "usersId")
+    @OneToMany(mappedBy = "usersId", cascade = CascadeType.ALL)
     private List<UserConHongsi> hongsiList = new ArrayList<>();
 }
