@@ -55,8 +55,7 @@ public class MypageController {
     }
 
     @GetMapping("/mypage/hong-si/participant")
-    public ResultDto findParticipateHongsi(HttpServletRequest request,
-                                           @RequestParam(value = "user_id") Long userId) {
+    public ResultDto findParticipateHongsi(HttpServletRequest request) {
 
         HttpSession session = request.getSession();
         UserDto sessionUser = (UserDto) session.getAttribute("loginUser");
@@ -72,7 +71,7 @@ public class MypageController {
         }
 
         List<HongsiDto> result = new ArrayList<>();
-        for (Hongsi hongsi : mypageService.findParticipateHongsi(userId)) {
+        for (Hongsi hongsi : mypageService.findParticipateHongsi(sessionUser.getUser_id())) {
             HongsiDto hongsiDto = new HongsiDto();
             hongsiDto.setId(hongsi.getId());
             hongsiDto.setTitle(hongsi.getTitle());

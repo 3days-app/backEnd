@@ -25,7 +25,7 @@ public class MypageService {
 
     public List<Hongsi> findOwnerHongsi(Long userId) {
         Users findUsers = userRepo.findById(userId).get();
-        List<UserConHongsi> findUserConHongsi = userConHongsiRepo.findByUsersId(userId);
+        List<UserConHongsi> findUserConHongsi = userConHongsiRepo.findByUsersId(findUsers);
         List<Hongsi> result = new ArrayList<>();
         for (UserConHongsi userConHongsi : findUserConHongsi ) {
             Hongsi findHongsi = hongsiRepo.findById(userConHongsi.getHongsi().getId()).get();
@@ -38,7 +38,7 @@ public class MypageService {
 
     public List<Hongsi> findParticipateHongsi(Long userId) {
         Users findUsers = userRepo.findById(userId).get();
-        List<UserConHongsi> findUserConHongsi = userConHongsiRepo.findByUsersId(userId);
+        List<UserConHongsi> findUserConHongsi = userConHongsiRepo.findByUsersId(findUsers);
         List<Hongsi> result = new ArrayList<>();
         for (UserConHongsi userConHongsi : findUserConHongsi) {
             if (Objects.equals(userConHongsi.getUsersId(), findUsers)) {
@@ -50,7 +50,7 @@ public class MypageService {
 
     public List<Hongsi> findCompleteHongsi(Long userId) {
         Users findUsers = userRepo.findById(userId).get();
-        List<UserConHongsi> findUserConHongsi = userConHongsiRepo.findByUsersId(findUsers.getId());
+        List<UserConHongsi> findUserConHongsi = userConHongsiRepo.findByUsersId(findUsers);
         List<Hongsi> result = new ArrayList<>();
         for (UserConHongsi userConHongsi : findUserConHongsi ) {
             Hongsi findHongsi = hongsiRepo.findById(userConHongsi.getHongsi().getId()).get();

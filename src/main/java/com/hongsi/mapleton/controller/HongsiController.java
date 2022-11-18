@@ -51,8 +51,6 @@ public class HongsiController {
         HttpSession session = request.getSession();
         UserDto sessionUser = (UserDto) session.getAttribute("loginUser");
 
-        ResultDto resultDto = new ResultDto();
-
         if (sessionUser == null) {
 //            resultDto.setResultCode("fail");
 //            resultDto.setResultMessage("유효하지 않은 요청입니다");
@@ -70,9 +68,21 @@ public class HongsiController {
      * 목표 참여하기
      */
     @PostMapping("/join/{hongsi_id}")
-    public ResponseEntity postParticipateHongsi(@PathVariable(name = "hongsi_id") Long hongsiId,
-                                                @RequestBody RequestDto requestDto) {
-        return  hongsiService.participateHongsi(requestDto.getUser_id(), hongsiId);
+    public ResponseEntity postParticipateHongsi(HttpServletRequest request,
+                                                @PathVariable(name = "hongsi_id") Long hongsiId) {
+
+        HttpSession session = request.getSession();
+        UserDto sessionUser = (UserDto) session.getAttribute("loginUser");
+
+        if (sessionUser == null) {
+//            resultDto.setResultCode("fail");
+//            resultDto.setResultMessage("유효하지 않은 요청입니다");
+        } else {
+            hongsiService.participateHongsi(sessionUser.getUser_id(), hongsiId);
+//            resultDto.setResultCode("success");
+//            resultDto.setResultMessage("내가 만든 홍시 조회 성공");
+        }
+        return  hongsiService.participateHongsi(sessionUser.getUser_id(), hongsiId);
     }
 
     /**

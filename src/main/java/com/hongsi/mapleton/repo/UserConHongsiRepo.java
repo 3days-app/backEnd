@@ -9,7 +9,8 @@ import java.util.List;
 
 public interface UserConHongsiRepo extends JpaRepository<UserConHongsi, Long> {
 
-    List<UserConHongsi> findByUsersId(Long userId);
-    UserConHongsi findByUsersIdAndHongsiId(Users users, Hongsi hongsi);
+
+    List<UserConHongsi> findByUsersId(Users users);
+    UserConHongsi findByUsersIdAndHongsi(Users users, Hongsi hongsi);
     List<UserConHongsi> findByHongsiId(Hongsi hongsi);
 }
