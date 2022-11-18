@@ -105,6 +105,7 @@ public class HongsiService {
 
         UserConHongsi userConHongsiCheck = userConHongsiRepo.findByUsersIdAndHongsi(users, hongsi);
 
+        System.out.println(userConHongsiCheck);
         if(hongsi.getCurrentParticipant() >= hongsi.getMaxParticipant()){
             return new ResponseEntity("참여 인원 가득 참", HttpStatus.FORBIDDEN);
         }
@@ -125,7 +126,7 @@ public class HongsiService {
     public ResponseEntity deleteHongsi(Long hongsiId) {
         Hongsi hongsi = hongsiRepo.findById(hongsiId)
                 .orElseThrow(() -> new IllegalStateException("홍시 없음"));
-        List<UserConHongsi> userConHongsiList = userConHongsiRepo.findByHongsiId(hongsi);
+        List<UserConHongsi> userConHongsiList = userConHongsiRepo.findByHongsi(hongsi);
 
         for(UserConHongsi userConHongsi : userConHongsiList){
             userConHongsiRepo.delete(userConHongsi);

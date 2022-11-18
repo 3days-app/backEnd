@@ -4,6 +4,7 @@ import com.hongsi.mapleton.dto.*;
 import com.hongsi.mapleton.service.HongsiService;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Request;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -74,14 +75,6 @@ public class HongsiController {
         HttpSession session = request.getSession();
         UserDto sessionUser = (UserDto) session.getAttribute("loginUser");
 
-        if (sessionUser == null) {
-//            resultDto.setResultCode("fail");
-//            resultDto.setResultMessage("유효하지 않은 요청입니다");
-        } else {
-            hongsiService.participateHongsi(sessionUser.getUser_id(), hongsiId);
-//            resultDto.setResultCode("success");
-//            resultDto.setResultMessage("내가 만든 홍시 조회 성공");
-        }
         return  hongsiService.participateHongsi(sessionUser.getUser_id(), hongsiId);
     }
 

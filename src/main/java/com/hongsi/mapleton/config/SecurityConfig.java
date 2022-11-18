@@ -26,22 +26,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .cors().configurationSource(corsFilter())
+                .and()
+                .httpBasic().disable()
+                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/","/**").permitAll()
-                .antMatchers("/h2-console/**").permitAll()
-                .and()
-                .csrf()
-                .ignoringAntMatchers("/h2-console/**").disable()
-                .httpBasic()
                 .and()
                 .headers()
                 .frameOptions()
                 .disable();
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-
+    //CORS error
+    @Bean
+    public CorsConfigurationSource corsFilter(){
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOrigin("http://3days-app.s3-website.ap-northeast-2.amazonaws.com/");
+        config.addAllowedOrigin("http://localhost");
+        config.addAllowedMethod("*");
+        config.addAllowedHeader("*");
+        config.setMaxAge(3600L);
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 
 }

@@ -17,7 +17,6 @@ public class UserConHongsi {
     @Id @GeneratedValue
     @Column(name = "user_con_hongsi_id")
     private Long id;
-    private Long dup = 0l;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -27,10 +26,10 @@ public class UserConHongsi {
     @JoinColumn(name = "hongsi_id")
     private Hongsi hongsi;
 
-    public UserConHongsi(Users users, Hongsi hongsi) {
+    public UserConHongsi(Users users, Hongsi hongsis) {
         this.usersId = users;
-        users.getHongsiList().add(this);
-        this.hongsi = hongsi;
+        usersId.getHongsiList().add(this);
+        this.hongsi = hongsis;
         hongsi.getUserList().add(this);
     }
 }

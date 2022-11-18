@@ -12,5 +12,5 @@ public interface UserConHongsiRepo extends JpaRepository<UserConHongsi, Long> {
 
     List<UserConHongsi> findByUsersId(Users users);
     UserConHongsi findByUsersIdAndHongsi(Users users, Hongsi hongsi);
-    List<UserConHongsi> findByHongsiId(Hongsi hongsi);
+    List<UserConHongsi> findByHongsi(Hongsi hongsi);
 }
