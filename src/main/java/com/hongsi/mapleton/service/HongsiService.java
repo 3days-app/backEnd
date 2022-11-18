@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class HongsiService {
     private final HongsiRepo hongsiRepo;
     private final UserConHongsiRepo userConHongsiRepo;
     private final BoardRepo boardRepo;
+    private final S3Uploader s3Uploader;
 
     /**
      * 홍시리스트 출력
@@ -78,20 +80,33 @@ public class HongsiService {
     /**
      * 목표 게시판 작성하기 - S3 추가해야함
      */
-    public ResponseEntity writeHongsiBoard(Long hongsiId, MultipartFile multipartFile){
-        Hongsi hongsi = hongsiRepo.findById(hongsiId).get();
-        hongsi.setSuccess_status("success");
+    public ResponseEntity writeHongsiBoard(Long hongsiId, String content , MultipartFile multipartFile) throws IOException {
+        //values[0] = deleteImage , values[1] = Image;
+        Hongsi hongsi = hongsiRepo.findById(hongsiId)
+                .orElseThrow(() -> new IllegalStateException("홍시 없음"));
+        Board board = new Board(hongsi);
+        String values[] = s3Uploader.upload(multipartFile, "board");
+
+        board.setContent(content);
+        board.setDeleteImage(values[0]);
+        board.setImage(values[1]);
+        boardRepo.save(board);
+
         return new ResponseEntity("게시글 작성 완료", HttpStatus.OK);
     }
 
     /**
      * 목표 작성하기
      */
-    public ResponseEntity writeHongsi(RequestDto requestDto){
+    public ResponseEntity writeHongsi(Long userId,RequestDto requestDto, MultipartFile multipartFile) throws IOException{
+        String values[] = s3Uploader.upload(multipartFile, "hong-si");
+
         Hongsi hongsi = new Hongsi(requestDto);
-        hongsi.setSuccess_status("fail");
+        hongsi.setDeleteImage(values[0]);
+        hongsi.setImage(values[1]);
         hongsiRepo.save(hongsi);
-        Users users = userRepo.findById(requestDto.getUser_id()).get();
+        Users users = userRepo.findById(userId)
+                .orElseThrow(() -> new IllegalStateException("없는 유저"));
         UserConHongsi userConHongsi = new UserConHongsi(users, hongsi);
         userConHongsiRepo.save(userConHongsi);
         return new ResponseEntity("목표 작성 완료", HttpStatus.OK);

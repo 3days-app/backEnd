@@ -11,6 +11,7 @@ public class HongsiListDto {
     private String endDate;
     private Long currentParticipant;
     private Long maxParticipant;
+    private String image;
 
     public HongsiListDto(Hongsi hongsi){
         this.hongsi_id = hongsi.getId();
@@ -19,5 +20,6 @@ public class HongsiListDto {
         this.endDate = hongsi.getEndDate();
         this.currentParticipant = hongsi.getCurrentParticipant();
         this.maxParticipant = hongsi.getMaxParticipant();
+        this.image = hongsi.getImage();
     }
 }

@@ -7,9 +7,11 @@ import org.apache.coyote.Request;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 @RequestMapping("/hong-si")
@@ -43,26 +45,28 @@ public class HongsiController {
     }
 
     /**
+     * 홍시 보드 작성하기
+     */
+    @PostMapping("/board/{hongsi_id}")
+    public ResponseEntity postHongsiBoard(@PathVariable(name = "hongsi_id") Long hongsiId,
+                                          @RequestPart(name = "content") String content,
+                                          @RequestPart(name = "image") MultipartFile multipartFile) throws IOException {
+        return hongsiService.writeHongsiBoard(hongsiId, content , multipartFile);
+    }
+
+    /**
      * 목표 작성하기
      */
     @PostMapping("")
     public ResponseEntity postHongsi(HttpServletRequest request,
-                                     @RequestBody RequestDto requestDto){
+                                     @RequestPart(name = "requestDto") RequestDto requestDto,
+                                     @RequestPart(name = "image") MultipartFile multipartFile) throws IOException {
 
         HttpSession session = request.getSession();
         UserDto sessionUser = (UserDto) session.getAttribute("loginUser");
 
-        if (sessionUser == null) {
-//            resultDto.setResultCode("fail");
-//            resultDto.setResultMessage("유효하지 않은 요청입니다");
-        } else {
-            requestDto.setUser_id(sessionUser.getUser_id());
-            return hongsiService.writeHongsi(requestDto);
-//            resultDto.setResultCode("success");
-//            resultDto.setResultMessage("내가 만든 홍시 조회 성공");
-        }
 
-        return hongsiService.writeHongsi(requestDto);
+        return hongsiService.writeHongsi(sessionUser.getUser_id(),requestDto, multipartFile);
     }
 
     /**

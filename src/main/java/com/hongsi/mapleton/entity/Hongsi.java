@@ -28,6 +28,8 @@ public class Hongsi {
     private String success_status; //success fail
 
     private String writer;
+    private String image;
+    private String deleteImage;
 
     @OneToMany(mappedBy = "hongsi", cascade = CascadeType.PERSIST)
     private List<UserConHongsi> userList = new ArrayList<>();

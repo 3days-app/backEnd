@@ -14,8 +14,15 @@ public class Board {
     @Column(name = "board_id")
     private Long id;
 
+    private String content;
     private String image;
+    private String deleteImage;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Hongsi hongsi;
+
+    public Board(Hongsi hongsis){
+        this.hongsi = hongsis;
+        hongsis.getBoardList().add(this);
+    }
 }

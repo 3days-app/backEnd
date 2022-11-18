@@ -13,6 +13,7 @@ public class HongsiDetailDto {
     private Long maxParticipant;
     private String content;
     private String writer;
+    private String image;
 
     public HongsiDetailDto(Hongsi hongsi){
         this.hongsi_id = hongsi.getId();
@@ -23,5 +24,6 @@ public class HongsiDetailDto {
         this.maxParticipant = hongsi.getMaxParticipant();
         this.content = hongsi.getContent();
         this.writer = hongsi.getWriter();
+        this.image = hongsi.getImage();
     }
 }
