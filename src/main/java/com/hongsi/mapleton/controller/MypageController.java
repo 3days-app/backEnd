@@ -45,8 +45,10 @@ public class MypageController {
             HongsiDto hongsiDto = new HongsiDto();
             hongsiDto.setId(hongsi.getId());
             hongsiDto.setTitle(hongsi.getTitle());
+            hongsiDto.setImgage(hongsi.getImage());
             hongsiDto.setStartDate(hongsi.getStartDate());
             hongsiDto.setEndDate(hongsi.getEndDate());
+
             result.add(hongsiDto);
         }
 
@@ -75,6 +77,7 @@ public class MypageController {
             HongsiDto hongsiDto = new HongsiDto();
             hongsiDto.setId(hongsi.getId());
             hongsiDto.setTitle(hongsi.getTitle());
+            hongsiDto.setImgage(hongsi.getImage());
             hongsiDto.setStartDate(hongsi.getStartDate());
             hongsiDto.setEndDate(hongsi.getEndDate());
             result.add(hongsiDto);
@@ -105,6 +108,7 @@ public class MypageController {
             HongsiDto hongsiDto = new HongsiDto();
             hongsiDto.setId(hongsi.getId());
             hongsiDto.setTitle(hongsi.getTitle());
+            hongsiDto.setImgage(hongsi.getImage());
             hongsiDto.setStartDate(hongsi.getStartDate());
             hongsiDto.setEndDate(hongsi.getEndDate());
             result.add(hongsiDto);

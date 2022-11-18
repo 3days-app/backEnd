@@ -12,6 +12,7 @@ import javax.persistence.Id;
 public class HongsiDto {
     private Long id;
     private String title;
+    private String imgage;
     private String startDate;
     private String endDate;
 }
