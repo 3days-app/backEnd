@@ -13,4 +13,5 @@ public class RequestDto {
     private Long maxParticipant;
     private String content;
     private String writer;
+    private String category;
 }

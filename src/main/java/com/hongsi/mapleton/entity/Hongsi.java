@@ -30,6 +30,7 @@ public class Hongsi {
     private String writer;
     private String image;
     private String deleteImage;
+    private String category;
 
     @OneToMany(mappedBy = "hongsi", cascade = CascadeType.PERSIST)
     private List<UserConHongsi> userList = new ArrayList<>();

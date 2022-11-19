@@ -74,12 +74,14 @@ public class HongsiController {
      */
     @PostMapping("/join/{hongsi_id}")
     public ResponseEntity postParticipateHongsi(HttpServletRequest request,
-                                                @PathVariable(name = "hongsi_id") Long hongsiId) {
+                                                @PathVariable(name = "hongsi_id") Long hongsiId,
+                                                @RequestBody RequestDto requestDto) {
 
         HttpSession session = request.getSession();
         UserDto sessionUser = (UserDto) session.getAttribute("loginUser");
 
-        return  hongsiService.participateHongsi(sessionUser.getUser_id(), hongsiId);
+//        return  hongsiService.participateHongsi(sessionUser.getUser_id(), hongsiId);
+        return hongsiService.participateHongsi(requestDto.getUser_id(), hongsiId);
     }
 
     /**
@@ -88,5 +90,13 @@ public class HongsiController {
     @DeleteMapping("")
     public ResponseEntity deleteHongsi(@RequestBody RequestDto requestDto){
         return hongsiService.deleteHongsi(requestDto.getHongsi_id());
+    }
+
+    /**
+     * 홍시 카테고리 필터링
+     */
+    @PostMapping("/category")
+    public List<HongsiListDto> getCategoryHongsi(@RequestBody RequestDto requestDto){
+        return  hongsiService.categoryHongsiList(requestDto.getCategory());
     }
 }

@@ -125,10 +125,10 @@ public class HongsiService {
 
         System.out.println(userConHongsiCheck);
         if(hongsi.getCurrentParticipant() >= hongsi.getMaxParticipant()){
-            return new ResponseEntity("참여 인원 가득 참", HttpStatus.FORBIDDEN);
+            return new ResponseEntity("참여 인원 초과했습니다. 다른 홍시에 참여해주세요...", HttpStatus.FORBIDDEN);
         }
         if(userConHongsiCheck != null) {
-            return new ResponseEntity("이미 참여함", HttpStatus.FORBIDDEN);
+            return new ResponseEntity("이미 참여한 홍시입니다. 다른 홍시를 참여해주세요...", HttpStatus.FORBIDDEN);
         }
 
         UserConHongsi userConHongsi = new UserConHongsi(users, hongsi);
@@ -153,5 +153,20 @@ public class HongsiService {
         hongsiRepo.deleteById(hongsiId);
 
         return new ResponseEntity("목표 삭제 완료", HttpStatus.OK);
+    }
+
+    /**
+     * 카테고리 필터링
+     */
+    public List<HongsiListDto> categoryHongsiList(String category) {
+        List<Hongsi> hongsiList = hongsiRepo.findByCategory(category);
+        List<HongsiListDto> hongsiListDtoList = new ArrayList<>();
+
+        for(Hongsi hongsi : hongsiList){
+            HongsiListDto hongsiListDto = new HongsiListDto(hongsi);
+            hongsiListDtoList.add(hongsiListDto);
+        }
+
+        return hongsiListDtoList;
     }
 }

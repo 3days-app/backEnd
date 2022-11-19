@@ -8,5 +8,6 @@ import java.util.List;
 public interface HongsiRepo extends JpaRepository<Hongsi, Long> {
 
     List<Hongsi> findByWriter(String username);
+    List<Hongsi> findByCategory(String category);
 
 }
