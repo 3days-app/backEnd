@@ -48,17 +48,17 @@ public class MypageService {
         return result;
     }
 
-    public List<Hongsi> findCompleteHongsi(Long userId) {
-        Users findUsers = userRepo.findById(userId).get();
-        List<UserConHongsi> findUserConHongsi = userConHongsiRepo.findByUsersId(findUsers);
-        List<Hongsi> result = new ArrayList<>();
-        for (UserConHongsi userConHongsi : findUserConHongsi ) {
-            Hongsi findHongsi = hongsiRepo.findById(userConHongsi.getHongsi().getId()).get();
-            if (Objects.equals(findHongsi.getHongsi_status(), "completed")) {
-                result.add(findHongsi);
-            }
-        }
-        return result;
-    }
+//    public List<Hongsi> findCompleteHongsi(Long userId) {
+//        Users findUsers = userRepo.findById(userId).get();
+//        List<UserConHongsi> findUserConHongsi = userConHongsiRepo.findByUsersId(findUsers);
+//        List<Hongsi> result = new ArrayList<>();
+//        for (UserConHongsi userConHongsi : findUserConHongsi ) {
+//            Hongsi findHongsi = hongsiRepo.findById(userConHongsi.getHongsi().getId()).get();
+//            if (Objects.equals(findHongsi.getHongsi_status(), "complete")) {
+//                result.add(findHongsi);
+//            }
+//        }
+//        return result;
+//    }
 
 }

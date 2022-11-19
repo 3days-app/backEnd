@@ -61,7 +61,7 @@ public class UserController {
             userDto.setUser_id(loginUser.get().getId());
             userDto.setNickname(loginUser.get().getNickname());
             Cookie myCookie = new Cookie("cookieName", session.getId());
-            myCookie.setMaxAge(10000);
+            myCookie.setMaxAge(100000000);
             myCookie.setPath("/"); // 모든 경로에서 접근 가능 하도록 설정
             resultDto.setResultCode("success");
             resultDto.setResultMessage("로그인 성공");

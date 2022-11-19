@@ -87,34 +87,33 @@ public class MypageController {
         return resultDto;
     }
 
-    @GetMapping("/mypage/hong-si/completed")
-    public ResultDto findCompletedHongsi(HttpServletRequest request,
-                                         @RequestParam(value = "user_id") Long userId) {
-
-        HttpSession session = request.getSession();
-        UserDto sessionUser = (UserDto) session.getAttribute("loginUser");
-
-        ResultDto resultDto = new ResultDto();
-
-        if (sessionUser == null) {
-            resultDto.setResultCode("fail");
-            resultDto.setResultMessage("유효하지 않은 요청입니다");
-        } else {
-            resultDto.setResultCode("success");
-            resultDto.setResultMessage("내가 완료한 홍시 조회 성공");
-        }
-
-        List<HongsiDto> result = new ArrayList<>();
-        for (Hongsi hongsi : mypageService.findCompleteHongsi(userId)) {
-            HongsiDto hongsiDto = new HongsiDto();
-            hongsiDto.setId(hongsi.getId());
-            hongsiDto.setTitle(hongsi.getTitle());
-            hongsiDto.setImage(hongsi.getImage());
-            hongsiDto.setStartDate(hongsi.getStartDate());
-            hongsiDto.setEndDate(hongsi.getEndDate());
-            result.add(hongsiDto);
-        }
-        resultDto.setData(result);
-        return resultDto;
-    }
+//    @GetMapping("/mypage/hong-si/completed")
+//    public ResultDto findCompletedHongsi(HttpServletRequest request,
+//                                         @RequestParam(value = "user_id") Long userId) {
+//
+//        HttpSession session = request.getSession();
+//        UserDto sessionUser = (UserDto) session.getAttribute("loginUser");
+//
+//        ResultDto resultDto = new ResultDto();
+//
+//        if (sessionUser == null) {
+//            resultDto.setResultCode("fail");
+//            resultDto.setResultMessage("유효하지 않은 요청입니다");
+//        } else {
+//            resultDto.setResultCode("success");
+//            resultDto.setResultMessage("내가 완료한 홍시 조회 성공");
+//        }
+//
+//        List<HongsiDto> result = new ArrayList<>();
+//        for (Hongsi hongsi : mypageService.findCompleteHongsi(userId)) {
+//            HongsiDto hongsiDto = new HongsiDto();
+//            hongsiDto.setId(hongsi.getId());
+//            hongsiDto.setTitle(hongsi.getTitle());
+//            hongsiDto.setStartDate(hongsi.getStartDate());
+//            hongsiDto.setEndDate(hongsi.getEndDate());
+//            result.add(hongsiDto);
+//        }
+//        resultDto.setData(result);
+//        return resultDto;
+//    }
 }

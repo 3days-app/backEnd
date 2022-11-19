@@ -80,12 +80,19 @@ public class HongsiService {
     /**
      * 목표 게시판 작성하기 - S3 추가해야함
      */
-    public ResponseEntity writeHongsiBoard(Long hongsiId, String content , MultipartFile multipartFile) throws IOException {
+    public ResponseEntity writeHongsiBoard(Long userId,Long hongsiId, String content , MultipartFile multipartFile) throws IOException {
         //values[0] = deleteImage , values[1] = Image;
         Hongsi hongsi = hongsiRepo.findById(hongsiId)
                 .orElseThrow(() -> new IllegalStateException("홍시 없음"));
+        Users user = userRepo.findById(userId)
+                .orElseThrow(() -> new IllegalStateException("유저 없음"));
         Board board = new Board(hongsi);
         String values[] = s3Uploader.upload(multipartFile, "board");
+        UserConHongsi userConHongsi = userConHongsiRepo.findByUsersIdAndHongsi(user, hongsi);
+
+        userConHongsi.setCount(userConHongsi.getCount()+1);
+        if(userConHongsi.getCount() >= 3)
+            userConHongsi.setStatus("completed");
 
         board.setContent(content);
         board.setDeleteImage(values[0]);
@@ -108,6 +115,8 @@ public class HongsiService {
         Users users = userRepo.findById(userId)
                 .orElseThrow(() -> new IllegalStateException("없는 유저"));
         UserConHongsi userConHongsi = new UserConHongsi(users, hongsi);
+        userConHongsi.setStatus("running");
+        userConHongsi.setCount(0l);
         userConHongsiRepo.save(userConHongsi);
         return new ResponseEntity("목표 작성 완료", HttpStatus.OK);
     }

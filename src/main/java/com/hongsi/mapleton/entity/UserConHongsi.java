@@ -27,6 +27,9 @@ public class UserConHongsi {
     @JoinColumn(name = "hongsi_id")
     private Hongsi hongsi;
 
+    private Long count;
+    private String status;
+
     public UserConHongsi(Users users, Hongsi hongsis) {
         this.usersId = users;
         usersId.getHongsiList().add(this);

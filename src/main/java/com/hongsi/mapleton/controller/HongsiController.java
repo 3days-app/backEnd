@@ -50,8 +50,12 @@ public class HongsiController {
     @PostMapping("/board/{hongsi_id}")
     public ResponseEntity postHongsiBoard(@PathVariable(name = "hongsi_id") Long hongsiId,
                                           @RequestPart(name = "content") String content,
-                                          @RequestPart(name = "image") MultipartFile multipartFile) throws IOException {
-        return hongsiService.writeHongsiBoard(hongsiId, content , multipartFile);
+                                          @RequestPart(name = "image") MultipartFile multipartFile,
+                                          HttpServletRequest request) throws IOException {
+        HttpSession session = request.getSession();
+        UserDto sessionUser = (UserDto) session.getAttribute("loginUser");
+
+        return hongsiService.writeHongsiBoard(sessionUser.getUser_id(),hongsiId, content , multipartFile);
     }
 
     /**
@@ -64,7 +68,6 @@ public class HongsiController {
 
         HttpSession session = request.getSession();
         UserDto sessionUser = (UserDto) session.getAttribute("loginUser");
-
 
         return hongsiService.writeHongsi(sessionUser.getUser_id(),requestDto, multipartFile);
     }
