@@ -24,9 +24,8 @@ public class Hongsi {
     private String content;
     private String startDate;
     private String endDate;
-    private String hongsi_status; //before during completed
-    private String success_status; //success fail
-
+    private String hongsi_status; //before, during(사람꽉참), completed-> 시간 단위 : String -> Date Type으로 바꿈
+    private String success_status; //success, fail -> 유저마다 필요
     private String writer;
     private String image;
     private String deleteImage;

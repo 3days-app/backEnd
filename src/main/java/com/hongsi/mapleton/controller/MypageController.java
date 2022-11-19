@@ -45,8 +45,10 @@ public class MypageController {
             HongsiDto hongsiDto = new HongsiDto();
             hongsiDto.setId(hongsi.getId());
             hongsiDto.setTitle(hongsi.getTitle());
+            hongsiDto.setImage(hongsi.getImage());
             hongsiDto.setStartDate(hongsi.getStartDate());
             hongsiDto.setEndDate(hongsi.getEndDate());
+
             result.add(hongsiDto);
         }
 
@@ -65,6 +67,7 @@ public class MypageController {
         if (sessionUser == null) {
             resultDto.setResultCode("fail");
             resultDto.setResultMessage("유효하지 않은 요청입니다");
+            return resultDto;
         } else {
             resultDto.setResultCode("success");
             resultDto.setResultMessage("내가 쫀 홍시 조회 성공");
@@ -75,6 +78,7 @@ public class MypageController {
             HongsiDto hongsiDto = new HongsiDto();
             hongsiDto.setId(hongsi.getId());
             hongsiDto.setTitle(hongsi.getTitle());
+            hongsiDto.setImage(hongsi.getImage());
             hongsiDto.setStartDate(hongsi.getStartDate());
             hongsiDto.setEndDate(hongsi.getEndDate());
             result.add(hongsiDto);
@@ -105,6 +109,7 @@ public class MypageController {
             HongsiDto hongsiDto = new HongsiDto();
             hongsiDto.setId(hongsi.getId());
             hongsiDto.setTitle(hongsi.getTitle());
+            hongsiDto.setImage(hongsi.getImage());
             hongsiDto.setStartDate(hongsi.getStartDate());
             hongsiDto.setEndDate(hongsi.getEndDate());
             result.add(hongsiDto);

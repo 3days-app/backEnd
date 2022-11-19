@@ -54,7 +54,7 @@ public class MypageService {
         List<Hongsi> result = new ArrayList<>();
         for (UserConHongsi userConHongsi : findUserConHongsi ) {
             Hongsi findHongsi = hongsiRepo.findById(userConHongsi.getHongsi().getId()).get();
-            if (Objects.equals(findHongsi.getHongsi_status(), "complete")) {
+            if (Objects.equals(findHongsi.getHongsi_status(), "completed")) {
                 result.add(findHongsi);
             }
         }
