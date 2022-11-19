@@ -23,3 +23,15 @@ spring:
 logging:
   level:
     org.hibernate.type: trace
+
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIAT7GDEU46C7ZSNTWF       # AWS IAM AccessKey 적기
+      secretKey: YjWeN5FjpUjalh2U8Pppe9Z3qldEA9mdAL8280hx   # AWS IAM SecretKey 적기
+    s3:
+      bucket: 3days-s3    # ex) marryting-gyunny
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false

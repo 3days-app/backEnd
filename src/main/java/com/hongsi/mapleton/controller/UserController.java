@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -48,18 +49,24 @@ public class UserController {
 
     @PostMapping("/user/login")
     public ResultDto login(HttpServletRequest request,
+                      HttpServletResponse response,
                       @RequestBody UserDto userDto) {
         Optional<Users> loginUser = userRepo.findByEmailAndPassword(userDto.getEmail(), userDto.getPassword());
         ResultDto resultDto = new ResultDto();
+
 
         if (loginUser.isPresent()) {
             HttpSession session = request.getSession();
             session.setAttribute("loginUser", userDto);
             userDto.setUser_id(loginUser.get().getId());
             userDto.setNickname(loginUser.get().getNickname());
+            Cookie myCookie = new Cookie("cookieName", session.getId());
+            myCookie.setMaxAge(10000);
+            myCookie.setPath("/"); // 모든 경로에서 접근 가능 하도록 설정
             resultDto.setResultCode("success");
             resultDto.setResultMessage("로그인 성공");
             resultDto.setData(userDto);
+            response.addCookie(myCookie);
         } else {
             resultDto.setResultCode("fail");
             resultDto.setResultMessage("로그인 실패");
