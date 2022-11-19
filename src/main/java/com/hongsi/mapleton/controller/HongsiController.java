@@ -29,6 +29,14 @@ public class HongsiController {
     }
 
     /**
+     * 홍시 15개 리스트 출력
+     */
+    @GetMapping("/ranking")
+    public List<HongsiListDto> getHongsiListTop15() {
+        return hongsiService.getHongsiListTop15();
+    }
+
+    /**
      * 홍시 디테일 출력
      */
     @GetMapping("/{hongsi_id}")

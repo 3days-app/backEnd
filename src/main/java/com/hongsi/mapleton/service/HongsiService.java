@@ -50,6 +50,21 @@ public class HongsiService {
     }
 
     /**
+     * 홍시리스트 15개 출력
+     */
+    public List<HongsiListDto> getHongsiListTop15() {
+        List<HongsiListDto> hongsiListDtoList = new ArrayList<>();
+        List<Hongsi> hongsiList = hongsiRepo.findTop15ByOrderByStartDate();
+
+        for(Hongsi hongsi : hongsiList){
+            HongsiListDto hongsiListDto = new HongsiListDto(hongsi);
+            hongsiListDtoList.add(hongsiListDto);
+        }
+
+        return hongsiListDtoList;
+    }
+
+    /**
      * 홍시리스트 디테일 출력
      */
     public HongsiDetailDto hongsiDetail(Long hongsiId) {
@@ -132,7 +147,6 @@ public class HongsiService {
 
         UserConHongsi userConHongsiCheck = userConHongsiRepo.findByUsersIdAndHongsi(users, hongsi);
 
-        System.out.println(userConHongsiCheck);
         if(hongsi.getCurrentParticipant() >= hongsi.getMaxParticipant()){
             return new ResponseEntity("참여 인원 초과했습니다. 다른 홍시에 참여해주세요...", HttpStatus.FORBIDDEN);
         }
