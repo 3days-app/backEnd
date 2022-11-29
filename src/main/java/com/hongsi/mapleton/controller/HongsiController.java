@@ -77,6 +77,7 @@ public class HongsiController {
         HttpSession session = request.getSession();
         UserDto sessionUser = (UserDto) session.getAttribute("loginUser");
 
+
         return hongsiService.writeHongsi(sessionUser.getUser_id(),requestDto, multipartFile);
     }
 
